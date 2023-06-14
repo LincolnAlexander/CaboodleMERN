@@ -21,7 +21,11 @@ function buildServiceRoutes(index) {
                 let results = {};
 
                 try {
-                    results = await service(req.body);
+                    results = await service(
+                        req.body,
+                        req.headers.authorization
+                    );
+                    // console.log("Header " + req.headers.authorization);
                 } catch (e) {
                     console.log(e);
                 }

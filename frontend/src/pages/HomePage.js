@@ -10,7 +10,7 @@ import DeleteCaboodleModal from "../components/modals/DeleteCaboodleModal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
+import Express from "../middleware/middlewareHelper";
 let totalCaboodles;
 const user_id = sessionStorage.getItem("user_id");
 const bp = require("../components/Paths");
@@ -27,18 +27,30 @@ function HomePage() {
 
     try {
         const loadCaboodles = async () => {
+            // try {
+            //     await axios
+            //         .post(bp.buildPath("LoadCaboodles"), {
+            //             user_id: user_id,
+            //             skip: skipNumber,
+            //         })
+            //         .then((res) => {
+            //             caboodlesArray = res.data.results;
+            //             totalCaboodles = res.data.totalCaboodles.length;
+            //             if (totalCaboodles > 5) showArrows(true);
+            //             setCaboodlesArray(res.data.results);
+            //         });
+            // } catch (e) {
+            //     console.log(e);
+            // }
             try {
-                await axios
-                    .post(bp.buildPath("LoadCaboodles"), {
-                        user_id: user_id,
-                        skip: skipNumber,
-                    })
-                    .then((res) => {
-                        caboodlesArray = res.data.results;
-                        totalCaboodles = res.data.totalCaboodles.length;
-                        if (totalCaboodles > 5) showArrows(true);
-                        setCaboodlesArray(res.data.results);
-                    });
+                const results = await Express.call("LoadCaboodles", {
+                    user_id: user_id,
+                    skip: skipNumber,
+                });
+                caboodlesArray = results.data.results;
+                totalCaboodles = results.data.totalCaboodles.length;
+                if (totalCaboodles > 5) showArrows(true);
+                setCaboodlesArray(results.data.results);
             } catch (e) {
                 console.log(e);
             }

@@ -5,6 +5,7 @@ import MediumButton from "../MediumButton";
 import SmallInputBox from "../SmallInputBox";
 import CloseIcon from "../../images/CloseIcon.png";
 import PurchasedButtons from "../PurchasedButtons";
+import Express from "../../middleware/middlewareHelper";
 
 let priceInput = null;
 let urlInput = "";
@@ -30,17 +31,24 @@ function CreateElementoModal(props) {
                 priority: priorityInput == null ? 1 : priorityInput,
                 link: urlInput.length == 0 ? "" : urlInput,
                 caboodle_id: props.caboodleId,
+                user_id: sessionStorage.getItem("user_id"),
             };
-            try {
-                await axios
-                    .post(bp.buildPath("CreateElemento"), elemento)
-                    .then((res) => {
-                        console.log(res.data);
-                    })
-                    .catch((e) => console.log(e));
-            } catch (e) {
-                console.log(e);
-            }
+            // try {
+            //     await axios
+            //         .post(bp.buildPath("CreateElemento"), elemento)
+            //         .then((res) => {
+            //             console.log(res.data);
+            //         })
+            //         .catch((e) => console.log(e));
+            // } catch (e) {
+            //     console.log(e);
+            // }
+
+            await Express.call("CreateElemento", elemento)
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((e) => console.log(e));
         };
 
         function renderInputs() {
@@ -171,7 +179,6 @@ function CreateElementoModal(props) {
                         } catch (e) {
                             console.log(e);
                         }
-                        e.preventDefault();
                     }}
                     className="flex flex-col items-center h-full grow-0 "
                 >

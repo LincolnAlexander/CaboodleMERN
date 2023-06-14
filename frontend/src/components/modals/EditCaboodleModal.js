@@ -5,6 +5,7 @@ import SmallInputBox from "../SmallInputBox";
 import MediumButton from "../MediumButton";
 import CloseIcon from "../../images/CloseIcon.png";
 import CheckmarkIcon from "../../images/CheckmarkIcon.png";
+import Express from "../../middleware/middlewareHelper";
 
 let nickNameInput = "";
 let descriptionInput = "";
@@ -41,10 +42,20 @@ function EditCaboodleModal(props) {
                     postImage.myFile == ""
                         ? selectedCaboodle.image
                         : postImage.myFile,
+                user_id: sessionStorage.getItem("user_id"),
             };
+            // try {
+            //     await axios
+            //         .post(bp.buildPath("EditCaboodle"), caboodle)
+            //         .then((res) => {
+            //             console.log(res.data);
+            //         })
+            //         .catch((e) => console.log(e));
+            // } catch (e) {
+            //     console.log(e);
+            // }
             try {
-                await axios
-                    .post(bp.buildPath("EditCaboodle"), caboodle)
+                await Express.call("EditCaboodle", caboodle)
                     .then((res) => {
                         console.log(res.data);
                     })

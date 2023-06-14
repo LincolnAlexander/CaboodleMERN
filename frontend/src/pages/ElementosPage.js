@@ -6,36 +6,61 @@ import TrashIcon from "../images/TrashIcon.png";
 import CreateElementoModal from "../components/modals/CreateElementoModal";
 import EditElementoModal from "../components/modals/EditElementoModal";
 import { useEffect, useState } from "react";
+import Express from "../middleware/middlewareHelper";
 
 const bp = require("../components/Paths");
 const caboodleId = sessionStorage.getItem("currentCaboodleId");
 const caboodleName = sessionStorage.getItem("currentCaboodleName");
-
+const user_id = sessionStorage.getItem("user_id");
 function ElementosPage() {
     const [viewCreateElementoModal, setCreateElementoModal] = useState(false);
     const [viewEditElementoModal, setEditElementoModal] = useState(false);
     const [selectedElemento, setSelectedElemento] = useState();
     const [elementosArray, setElementosArray] = useState([]);
+    console.log(caboodleName);
     try {
         const loadElementos = async () => {
-            await axios
-                .post(bp.buildPath("./LoadElementos"), { caboodleId })
-                .then((res) => {
-                    setElementosArray(res.data.results);
-                });
+            // await axios
+            //     .post(bp.buildPath("./LoadElementos"), {
+            //         caboodleId,
+            //         user_id: sessionStorage.getItem("accessToken"),
+            //     })
+            //     .then((res) => {
+            //         console.log(res.data.results);
+            //         setElementosArray(res.data.results);
+            //     });
+            console.log(user_id);
+            const results = await Express.call("LoadElementos", {
+                caboodleId,
+                user_id,
+            });
+            setElementosArray(results.data.results);
         };
 
         const deleteElemento = async (elemento_id) => {
-            await axios
-                .post(bp.buildPath("./DeleteElemento"), { elemento_id })
-                .then(() => {
+            // await axios
+            //     .post(bp.buildPath("./DeleteElemento"), {
+            //         elemento_id,
+            //         user_id: sessionStorage.getItem("user_id"),
+            //     })
+            //     .then(() => {
+            //         loadElementos();
+            //     });
+            try {
+                await Express.call("DeleteElemento", {
+                    elemento_id,
+                    user_id: sessionStorage.getItem("user_id"),
+                }).then(() => {
                     loadElementos();
                 });
+            } catch (e) {
+                console.log(e);
+            }
         };
 
         useEffect(() => {
             loadElementos();
-        }, [viewEditElementoModal, viewCreateElementoModal]);
+        }, [viewEditElementoModal, viewCreateElementoModal, caboodleId]);
 
         function renderTop() {
             return (
@@ -118,7 +143,7 @@ function ElementosPage() {
                     {elementosArray.map((elemento) => (
                         <tr
                             className="border-b group border-gray-300 hover:bg-mainColors-silver hover:bg-opacity-25 cursor-pointer text-mainColors-silver"
-                            key={elemento.elementoName}
+                            key={elemento._id}
                         >
                             <td
                                 onClick={() => {}}
@@ -172,12 +197,15 @@ function ElementosPage() {
                     value={viewCreateElementoModal}
                     functionCall={() => {
                         setCreateElementoModal(false);
+                        loadElementos();
                     }}
                     caboodleId={caboodleId}
                 />
                 <EditElementoModal
                     value={viewEditElementoModal}
-                    functionCall={() => setEditElementoModal(false)}
+                    functionCall={() => {
+                        setEditElementoModal(false);
+                    }}
                     elemento={selectedElemento}
                 />
             </div>

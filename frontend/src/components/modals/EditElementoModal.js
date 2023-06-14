@@ -5,6 +5,7 @@ import MediumButton from "../MediumButton";
 import SmallInputBox from "../SmallInputBox";
 import CloseIcon from "../../images/CloseIcon.png";
 import PurchasedButtons from "../PurchasedButtons";
+import Express from "../../middleware/middlewareHelper";
 
 let priceInput = null;
 let urlInput = "";
@@ -47,11 +48,21 @@ function EditElementoModal(props) {
                         ? selectedElemento.elementoUrl
                         : urlInput,
                 elemento_id: selectedElemento._id,
+                user_id: sessionStorage.getItem("user_id"),
             };
 
+            // try {
+            //     await axios
+            //         .post(bp.buildPath("EditElemento"), elemento)
+            //         .then((res) => {
+            //             console.log(res.data);
+            //         })
+            //         .catch((e) => console.log(e));
+            // } catch (e) {
+            //     console.log(e);
+            // }
             try {
-                await axios
-                    .post(bp.buildPath("EditElemento"), elemento)
+                Express.call("EditElemento", elemento)
                     .then((res) => {
                         console.log(res.data);
                     })

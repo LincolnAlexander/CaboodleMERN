@@ -5,6 +5,7 @@ import CheckmarkIcon from "../../images/CheckmarkIcon.png";
 import SmallInputBox from "../SmallInputBox";
 import MediumButton from "../MediumButton";
 import CloseIcon from "../../images/CloseIcon.png";
+import Express from "../../middleware/middlewareHelper";
 
 let nickNameInput = "";
 let descriptionInput = "";
@@ -28,10 +29,20 @@ function CreateCaboodleModal(props) {
                 user_id: user_id,
                 elementos: [],
                 image: postImage.myFile,
+                user_id: sessionStorage.getItem("user_id"),
             };
+            // try {
+            //     await axios
+            //         .post(bp.buildPath("createCaboodle"), caboodle)
+            //         .then((res) => {
+            //             console.log(res.data);
+            //         })
+            //         .catch((e) => console.log(e));
+            // } catch (e) {
+            //     console.log(e);
+            // }
             try {
-                await axios
-                    .post(bp.buildPath("createCaboodle"), caboodle)
+                await Express.call("createCaboodle", caboodle)
                     .then((res) => {
                         console.log(res.data);
                     })
