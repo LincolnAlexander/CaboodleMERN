@@ -30,7 +30,6 @@ function CreateAccountPage() {
                 .post(bp.buildPath("Register"), loginInfo)
                 .then((res) => {
                     const results = res.data;
-                    console.log(results);
                     if (results.status === 200) {
                         updateSuccessMessage(
                             "Account successfully created, you may login now! "
@@ -39,11 +38,10 @@ function CreateAccountPage() {
                             navigate("/signIn");
                         }, 4000);
                     } else {
-                        updateSuccessMessage("Email already in use. ");
+                        updateSuccessMessage(results.error);
                     }
                 })
                 .catch((e) => console.log(e));
-            console.log("Creating Account...");
         };
 
         function renderInputs() {
@@ -66,7 +64,6 @@ function CreateAccountPage() {
                                 } else {
                                     emailInput = email.toLowerCase();
                                     updateEmailError(false);
-                                    console.log("Match");
                                 }
                             } catch (e) {
                                 console.log(e);
@@ -112,7 +109,6 @@ function CreateAccountPage() {
                                 } else {
                                     updateProfileError(false);
                                     profileInput = profile.toLowerCase();
-                                    console.log(profile.length);
                                 }
                             } catch (e) {
                                 console.log(e);

@@ -82,7 +82,7 @@ global.services["Register"] = async ({ email, password, profileName }) => {
         // Encrypt(password);
 
         const existingUser = await global.database["Users"].findOne({
-            email,
+            $or: [{ email: email }, { profileName: profileName }],
         });
 
         if (existingUser) {

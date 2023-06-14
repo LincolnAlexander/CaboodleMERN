@@ -28,7 +28,7 @@ function ElementosPage() {
         const deleteElemento = async (elemento_id) => {
             await axios
                 .post(bp.buildPath("./DeleteElemento"), { elemento_id })
-                .then((res) => {
+                .then(() => {
                     loadElementos();
                 });
         };
@@ -86,8 +86,12 @@ function ElementosPage() {
                     <button
                         className="bg-stone-800 rounded p-1 w-8"
                         onClick={() => {
-                            setEditElementoModal(true);
-                            setSelectedElemento(elemento);
+                            try {
+                                setEditElementoModal(true);
+                                setSelectedElemento(elemento);
+                            } catch (e) {
+                                console.log(e);
+                            }
                         }}
                     >
                         <img src={EditIcon} />
@@ -97,7 +101,6 @@ function ElementosPage() {
                         onClick={() => {
                             try {
                                 deleteElemento(elemento._id);
-                                console.log(elemento._id);
                             } catch (e) {
                                 console.log(e);
                             }

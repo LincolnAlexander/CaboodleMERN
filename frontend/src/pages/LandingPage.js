@@ -106,8 +106,6 @@ function LandingPage() {
     }
     return (
         <div className="flex lg:flex-row flex-col bg-mainColors-gray items-center">
-            {/* {renderHeader()} */}
-            {/* <Header /> */}
             <div className="w-1/2 m-4 ">{renderLeftHalf()}</div>
             <div className="w-1/2 m-4">{renderRightHalf()}</div>
         </div>

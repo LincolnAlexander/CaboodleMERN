@@ -17,7 +17,6 @@ function SmallInputBox(props) {
                 defaultValue={props.value}
                 min={props.min}
                 max={props.max}
-                // value={props.value}
                 onChange={(event) => {
                     if (props.onChange) {
                         props.onChange(event.target.value);
@@ -28,9 +27,6 @@ function SmallInputBox(props) {
                         props.onBlur(event.target.value);
                     }
                 }}
-                // onKeyUp={(e) => {
-                //     props.onKeyUp(e);
-                // }}
             />
             <div className={props.showError == true ? "visible" : "invisible"}>
                 <ErrorInput errorMessage={props.errorMessage} />

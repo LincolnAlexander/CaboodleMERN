@@ -35,13 +35,8 @@ function HomePage() {
                     })
                     .then((res) => {
                         caboodlesArray = res.data.results;
-                        console.log(caboodlesArray);
-
-                        console.log(caboodlesArray.length);
                         totalCaboodles = res.data.totalCaboodles.length;
-                        console.log(totalCaboodles + " total");
                         if (totalCaboodles > 5) showArrows(true);
-
                         setCaboodlesArray(res.data.results);
                     });
             } catch (e) {
@@ -134,18 +129,24 @@ function HomePage() {
                         <div className="flex space-x-2">
                             <button
                                 onClick={() => {
-                                    console.log("going left");
-                                    if (skipNumber !== 0)
-                                        setSkipNumber(skipNumber - 1);
+                                    try {
+                                        if (skipNumber !== 0)
+                                            setSkipNumber(skipNumber - 1);
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
                                 }}
                             >
                                 <img src={LeftArrow} />
                             </button>
                             <button
                                 onClick={() => {
-                                    console.log("going right");
-                                    if (caboodlesArray.length >= 5)
-                                        setSkipNumber(skipNumber + 1);
+                                    try {
+                                        if (caboodlesArray.length >= 5)
+                                            setSkipNumber(skipNumber + 1);
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
                                 }}
                             >
                                 <img src={RightArrow} />

@@ -31,10 +31,8 @@ function LoginPage() {
                             updateSuccessMessage(
                                 "Incorrect login information."
                             );
-                            console.log("login error");
                         } else {
                             updateSuccessMessage("");
-                            console.log(res.data.user_id);
                             sessionStorage.setItem("user_id", res.data.user_id);
                             setTimeout(() => {
                                 navigate("/home");
@@ -73,9 +71,7 @@ function LoginPage() {
                                 } else {
                                     updateEmailError(false);
                                     updateSuccessMessage("");
-
                                     emailInput = email.toLowerCase();
-                                    console.log("Match");
                                 }
                             } catch (e) {
                                 console.log(e);
@@ -118,8 +114,6 @@ function LoginPage() {
                         css="bg-mainColors-green"
                         functionCall={(e) => {
                             try {
-                                // e.preventDefault();
-
                                 if (
                                     emailInput.length == 0 ||
                                     passwordInput.length == 0
@@ -130,9 +124,6 @@ function LoginPage() {
                                     return;
                                 }
                                 updateSuccessMessage("");
-                                console.log(
-                                    "sign in" + emailInput + " " + passwordInput
-                                );
                                 signIn();
                             } catch (e) {
                                 console.log(e);
