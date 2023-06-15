@@ -11,6 +11,7 @@ global.services["createCaboodle"] = async (
         let authenticatedUser = auth.authenticateRequest(header);
         if (user_id !== authenticatedUser.user_id)
             return { error: "Unauthrized user" };
+
         const caboodle = {
             nickname: name,
             description,
@@ -33,6 +34,7 @@ global.services["LoadCaboodles"] = async ({ user_id, skip }, header) => {
         let authenticatedUser = auth.authenticateRequest(header);
         if (user_id !== authenticatedUser.user_id)
             return { error: "Unauthrized user" };
+
         const results = await global.database["Caboodles"]
             .find({ user_id: new ObjectId(user_id) })
             .skip(skip)
@@ -41,7 +43,6 @@ global.services["LoadCaboodles"] = async ({ user_id, skip }, header) => {
         const totalCaboodles = await global.database["Caboodles"]
             .find({ user_id: new ObjectId(user_id) })
             .toArray();
-        // console.log(header);
 
         return { results, totalCaboodles };
     } catch (e) {

@@ -12,23 +12,24 @@ let urlInput = "";
 let elementoNameInput = "";
 let priorityInput = null;
 let purchasedInput = "";
+let user_id;
 
 function EditElementoModal(props) {
-    let bp = require("../Paths");
     const [modalInView, setInView] = useState(false);
-    const [selectedElemento, setSelectedElemento] = useState();
+    const [selectedElemento, setSelectedElemento] = useState({});
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
+        user_id = sessionStorage.getItem("user_id");
         setInView(props.value);
-    }, [props.value]);
-
-    useEffect(() => {
         setSelectedElemento(props.elemento);
-    }, [props.elemento]);
+    }, [props.value, props.elemento]);
 
     try {
         const editElemento = async () => {
+            console.log(selectedElemento);
+            console.log(elementoNameInput.length == 0);
+            console.log(elementoNameInput);
             const elemento = {
                 name:
                     elementoNameInput.length == 0
@@ -48,23 +49,18 @@ function EditElementoModal(props) {
                         ? selectedElemento.elementoUrl
                         : urlInput,
                 elemento_id: selectedElemento._id,
-                user_id: sessionStorage.getItem("user_id"),
+                user_id: user_id,
             };
-
-            // try {
-            //     await axios
-            //         .post(bp.buildPath("EditElemento"), elemento)
-            //         .then((res) => {
-            //             console.log(res.data);
-            //         })
-            //         .catch((e) => console.log(e));
-            // } catch (e) {
-            //     console.log(e);
-            // }
+            console.log(elemento);
             try {
                 Express.call("EditElemento", elemento)
                     .then((res) => {
-                        console.log(res.data);
+                        setSelectedElemento({});
+                        priceInput = null;
+                        urlInput = "";
+                        elementoNameInput = "";
+                        priorityInput = null;
+                        purchasedInput = "";
                     })
                     .catch((e) => console.log(e));
             } catch (e) {
@@ -203,7 +199,6 @@ function EditElementoModal(props) {
                 <form
                     onSubmit={(e) => {
                         try {
-                            e.preventDefault();
                             editElemento();
                             setInView(false);
                             props.functionCall();

@@ -3,17 +3,15 @@ import SmallCard from "../components/SmallCard";
 import LeftArrow from "../images/LeftIcon.png";
 import RightArrow from "../images/RightIcon.png";
 import MediumButton from "../components/MediumButton";
-import Header from "../components/Header";
 import CreateCaboodleModal from "../components/modals/CreateCaboodleModal";
 import EditCaboodleModal from "../components/modals/EditCaboodleModal";
 import DeleteCaboodleModal from "../components/modals/DeleteCaboodleModal";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import Express from "../middleware/middlewareHelper";
+
 let totalCaboodles;
-const user_id = sessionStorage.getItem("user_id");
-const bp = require("../components/Paths");
+let user_id;
 
 function HomePage() {
     let navigate = useNavigate();
@@ -27,21 +25,6 @@ function HomePage() {
 
     try {
         const loadCaboodles = async () => {
-            // try {
-            //     await axios
-            //         .post(bp.buildPath("LoadCaboodles"), {
-            //             user_id: user_id,
-            //             skip: skipNumber,
-            //         })
-            //         .then((res) => {
-            //             caboodlesArray = res.data.results;
-            //             totalCaboodles = res.data.totalCaboodles.length;
-            //             if (totalCaboodles > 5) showArrows(true);
-            //             setCaboodlesArray(res.data.results);
-            //         });
-            // } catch (e) {
-            //     console.log(e);
-            // }
             try {
                 const results = await Express.call("LoadCaboodles", {
                     user_id: user_id,
@@ -55,8 +38,8 @@ function HomePage() {
                 console.log(e);
             }
         };
-
         useEffect(() => {
+            user_id = sessionStorage.getItem("user_id");
             loadCaboodles();
         }, [
             skipNumber,

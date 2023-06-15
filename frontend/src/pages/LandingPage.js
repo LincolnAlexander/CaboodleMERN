@@ -3,7 +3,6 @@ import AccessoriesImage from "../images/AccessoriesImage.jpg";
 import CarsImage from "../images/CarsImage.jpg";
 import LargeButton from "../components/LargeButton";
 import SmallCard from "../components/SmallCard";
-import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 
 function LandingPage() {

@@ -1,4 +1,3 @@
-import axios from "axios";
 import MediumButton from "../components/MediumButton";
 import MediumTitle from "../components/MediumTitle";
 import EditIcon from "../images/EditIcon.png";
@@ -8,28 +7,17 @@ import EditElementoModal from "../components/modals/EditElementoModal";
 import { useEffect, useState } from "react";
 import Express from "../middleware/middlewareHelper";
 
-const bp = require("../components/Paths");
-const caboodleId = sessionStorage.getItem("currentCaboodleId");
-const caboodleName = sessionStorage.getItem("currentCaboodleName");
-const user_id = sessionStorage.getItem("user_id");
+let caboodleId;
+let caboodleName;
+let user_id;
+
 function ElementosPage() {
     const [viewCreateElementoModal, setCreateElementoModal] = useState(false);
     const [viewEditElementoModal, setEditElementoModal] = useState(false);
     const [selectedElemento, setSelectedElemento] = useState();
     const [elementosArray, setElementosArray] = useState([]);
-    console.log(caboodleName);
     try {
         const loadElementos = async () => {
-            // await axios
-            //     .post(bp.buildPath("./LoadElementos"), {
-            //         caboodleId,
-            //         user_id: sessionStorage.getItem("accessToken"),
-            //     })
-            //     .then((res) => {
-            //         console.log(res.data.results);
-            //         setElementosArray(res.data.results);
-            //     });
-            console.log(user_id);
             const results = await Express.call("LoadElementos", {
                 caboodleId,
                 user_id,
@@ -38,18 +26,10 @@ function ElementosPage() {
         };
 
         const deleteElemento = async (elemento_id) => {
-            // await axios
-            //     .post(bp.buildPath("./DeleteElemento"), {
-            //         elemento_id,
-            //         user_id: sessionStorage.getItem("user_id"),
-            //     })
-            //     .then(() => {
-            //         loadElementos();
-            //     });
             try {
                 await Express.call("DeleteElemento", {
                     elemento_id,
-                    user_id: sessionStorage.getItem("user_id"),
+                    user_id: user_id,
                 }).then(() => {
                     loadElementos();
                 });
@@ -59,13 +39,16 @@ function ElementosPage() {
         };
 
         useEffect(() => {
+            user_id = sessionStorage.getItem("user_id");
+            caboodleId = sessionStorage.getItem("currentCaboodleId");
+            caboodleName = sessionStorage.getItem("currentCaboodleName");
             loadElementos();
         }, [viewEditElementoModal, viewCreateElementoModal, caboodleId]);
 
         function renderTop() {
             return (
                 <div className="flex flex-col items-center m-10 space-y-6">
-                    <MediumTitle paragraphBody={caboodleName + " Caboodle"} />
+                    <MediumTitle paragraphBody={caboodleName + " caboodle"} />
                     <MediumButton
                         paragraphBody="Add Elemento"
                         functionCall={() => {

@@ -4,11 +4,11 @@ const router = express.Router();
 global.services = {};
 
 // List of collections
-require("./items");
 require("./register");
 require("./caboodles");
 require("./elementos");
-// require("./login");
+require("./login");
+
 function buildServiceRoutes(index) {
     try {
         const keys = Object.keys(index);

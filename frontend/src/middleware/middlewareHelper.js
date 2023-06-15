@@ -9,7 +9,7 @@ const config = {
 };
 class Express {
     async call(functionName, parameters) {
-        console.log("helper: + " + sessionStorage.getItem("accessToken"));
+        // console.log("helper: + " + sessionStorage.getItem("accessToken"));
         const results = await Axios.post(
             bp.buildPath(functionName),
             parameters,

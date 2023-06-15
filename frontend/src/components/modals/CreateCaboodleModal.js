@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import UploadImageIcon from "../../images/UploadPictureIcon.png";
 import CheckmarkIcon from "../../images/CheckmarkIcon.png";
@@ -9,8 +8,7 @@ import Express from "../../middleware/middlewareHelper";
 
 let nickNameInput = "";
 let descriptionInput = "";
-const bp = require("../Paths");
-const user_id = sessionStorage.getItem("user_id");
+let user_id;
 
 function CreateCaboodleModal(props) {
     let [modalInView, setInView] = useState(false);
@@ -19,6 +17,7 @@ function CreateCaboodleModal(props) {
 
     useEffect(() => {
         setInView(props.value);
+        user_id = sessionStorage.getItem("user_id");
     }, [props.value]);
 
     try {
@@ -29,22 +28,13 @@ function CreateCaboodleModal(props) {
                 user_id: user_id,
                 elementos: [],
                 image: postImage.myFile,
-                user_id: sessionStorage.getItem("user_id"),
+                user_id: user_id,
             };
-            // try {
-            //     await axios
-            //         .post(bp.buildPath("createCaboodle"), caboodle)
-            //         .then((res) => {
-            //             console.log(res.data);
-            //         })
-            //         .catch((e) => console.log(e));
-            // } catch (e) {
-            //     console.log(e);
-            // }
             try {
                 await Express.call("createCaboodle", caboodle)
                     .then((res) => {
-                        console.log(res.data);
+                        nickNameInput = "";
+                        descriptionInput = "";
                     })
                     .catch((e) => console.log(e));
             } catch (e) {
@@ -59,9 +49,7 @@ function CreateCaboodleModal(props) {
 
         const handleFileUpload = async (e) => {
             const file = e.target.files[0];
-            console.log(file);
             const base64 = await convertToBase64(file);
-            console.log(base64);
             setPostImage({ ...postImage, myFile: base64 });
             setUploadedImage(true);
         };
@@ -136,9 +124,7 @@ function CreateCaboodleModal(props) {
                     {renderFormInputs()}
                     <MediumButton
                         paragraphBody="Add Caboodle"
-                        functionCall={() => {
-                            console.log("clicked");
-                        }}
+                        functionCall={() => {}}
                     />
                 </form>
             );

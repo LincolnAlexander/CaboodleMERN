@@ -24,7 +24,6 @@ global.services["CreateElemento"] = async (
         await global.database["Elementos"].insertOne(elemento);
 
         return { status: 200, success: "true" };
-        // return results;
     } catch (e) {
         return e;
     }
@@ -57,6 +56,7 @@ global.services["DeleteElemento"] = async (
         let authenticatedUser = auth.authenticateRequest(header);
         if (user_id !== authenticatedUser.user_id)
             return { error: "Unauthrized user" };
+
         const deleted = await global.database["Elementos"].deleteOne({
             _id: new ObjectId(elemento_id),
         });
@@ -73,9 +73,12 @@ global.services["EditElemento"] = async (
     header
 ) => {
     try {
+        if (!elemento_id) return { error: "Missing elemento_id" };
+
         let authenticatedUser = auth.authenticateRequest(header);
         if (user_id !== authenticatedUser.user_id)
             return { error: "Unauthrized user" };
+
         const results = await global.database["Elementos"].updateOne(
             { _id: new ObjectId(elemento_id) },
             {

@@ -12,14 +12,14 @@ let urlInput = "";
 let elementoNameInput = "";
 let priorityInput = null;
 let purchasedInput = "";
-const bp = require("../Paths");
-
+let user_id;
 function CreateElementoModal(props) {
     const [modalInView, setInView] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         setInView(props.value);
+        user_id = sessionStorage.getItem("user_id");
     }, [props.value]);
 
     try {
@@ -31,22 +31,16 @@ function CreateElementoModal(props) {
                 priority: priorityInput == null ? 1 : priorityInput,
                 link: urlInput.length == 0 ? "" : urlInput,
                 caboodle_id: props.caboodleId,
-                user_id: sessionStorage.getItem("user_id"),
+                user_id: user_id,
             };
-            // try {
-            //     await axios
-            //         .post(bp.buildPath("CreateElemento"), elemento)
-            //         .then((res) => {
-            //             console.log(res.data);
-            //         })
-            //         .catch((e) => console.log(e));
-            // } catch (e) {
-            //     console.log(e);
-            // }
 
             await Express.call("CreateElemento", elemento)
-                .then((res) => {
-                    console.log(res.data);
+                .then(() => {
+                    priceInput = null;
+                    urlInput = "";
+                    elementoNameInput = "";
+                    priorityInput = null;
+                    purchasedInput = "";
                 })
                 .catch((e) => console.log(e));
         };
@@ -152,9 +146,7 @@ function CreateElementoModal(props) {
                 <>
                     <MediumButton
                         paragraphBody="Create Elemento"
-                        functionCall={() => {
-                            console.log("clicked");
-                        }}
+                        functionCall={() => {}}
                     />
                     <div>
                         <SmallTitle paragraphBody={errorMessage} />

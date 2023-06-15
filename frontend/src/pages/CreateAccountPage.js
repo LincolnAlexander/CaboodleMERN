@@ -4,13 +4,11 @@ import InputBox from "../components/InputBox";
 import LargeButton from "../components/LargeButton";
 import MediumTitle from "../components/MediumTitle";
 import SmallTitle from "../components/SmallTitle";
-import axios from "axios";
 import Express from "../middleware/middlewareHelper";
 
 let emailInput = "";
 let passwordInput = "";
 let profileInput = "";
-const bp = require("../components/Paths");
 
 function CreateAccountPage() {
     let [showEmailError, updateEmailError] = useState(false);
@@ -26,23 +24,6 @@ function CreateAccountPage() {
                 password: passwordInput,
                 profileName: profileInput,
             };
-            // axios
-            //     .post(bp.buildPath("Register"), loginInfo)
-            //     .then((res) => {
-            //         const results = res.data;
-            //         if (results.status === 200) {
-            //             updateSuccessMessage(
-            //                 "Account successfully created, you may login now! "
-            //             );
-            //             // sessionStorage.setItem("accessToken", results.webToken);
-            //             setTimeout(() => {
-            //                 navigate("/signIn");
-            //             }, 4000);
-            //         } else {
-            //             updateSuccessMessage(results.error);
-            //         }
-            //     })
-            //     .catch((e) => console.log(e));
             try {
                 Express.call("Register", loginInfo)
                     .then((res) => {
@@ -51,10 +32,9 @@ function CreateAccountPage() {
                             updateSuccessMessage(
                                 "Account successfully created, you may login now! "
                             );
-                            // sessionStorage.setItem("accessToken", results.webToken);
                             setTimeout(() => {
                                 navigate("/signIn");
-                            }, 4000);
+                            }, 2000);
                         } else {
                             updateSuccessMessage(results.error);
                         }

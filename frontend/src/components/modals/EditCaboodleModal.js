@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import UploadImageIcon from "../../images/UploadPictureIcon.png";
 import SmallInputBox from "../SmallInputBox";
@@ -9,7 +8,7 @@ import Express from "../../middleware/middlewareHelper";
 
 let nickNameInput = "";
 let descriptionInput = "";
-const bp = require("../Paths");
+let user_id;
 
 function EditCaboodleModal(props) {
     const [modalInView, setInView] = useState(false);
@@ -18,12 +17,10 @@ function EditCaboodleModal(props) {
     const [uploadedImage, setUploadedImage] = useState();
 
     useEffect(() => {
-        setInView(props.value);
-    }, [props.value]);
-
-    useEffect(() => {
+        user_id = sessionStorage.getItem("user_id");
         setSelectedCaboodle(props.caboodle);
-    }, [props.caboodle]);
+        setInView(props.value);
+    }, [props.value, props.caboodle]);
 
     try {
         const editCaboodle = async () => {
@@ -42,22 +39,13 @@ function EditCaboodleModal(props) {
                     postImage.myFile == ""
                         ? selectedCaboodle.image
                         : postImage.myFile,
-                user_id: sessionStorage.getItem("user_id"),
+                user_id: user_id,
             };
-            // try {
-            //     await axios
-            //         .post(bp.buildPath("EditCaboodle"), caboodle)
-            //         .then((res) => {
-            //             console.log(res.data);
-            //         })
-            //         .catch((e) => console.log(e));
-            // } catch (e) {
-            //     console.log(e);
-            // }
             try {
                 await Express.call("EditCaboodle", caboodle)
                     .then((res) => {
-                        console.log(res.data);
+                        nickNameInput = "";
+                        descriptionInput = "";
                     })
                     .catch((e) => console.log(e));
             } catch (e) {
@@ -73,9 +61,7 @@ function EditCaboodleModal(props) {
 
         const handleFileUpload = async (e) => {
             const file = e.target.files[0];
-            console.log(file);
             const base64 = await convertToBase64(file);
-            console.log(base64);
             setPostImage({ ...postImage, myFile: base64 });
             setUploadedImage(true);
         };
@@ -146,9 +132,7 @@ function EditCaboodleModal(props) {
                     {renderFormInputs()}
                     <MediumButton
                         paragraphBody="Submit"
-                        functionCall={() => {
-                            console.log("clicked");
-                        }}
+                        functionCall={() => {}}
                     />
                 </form>
             );

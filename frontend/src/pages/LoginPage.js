@@ -4,7 +4,6 @@ import MediumTitle from "../components/MediumTitle";
 import SmallTitle from "../components/SmallTitle";
 import InputBox from "../components/InputBox";
 import LargeButton from "../components/LargeButton";
-import axios from "axios";
 import Express from "../middleware/middlewareHelper";
 
 let emailInput = "";
@@ -18,36 +17,10 @@ function LoginPage() {
 
     try {
         const signIn = async () => {
-            let bp = require("../components/Paths");
             let accountInfo = {
                 email: emailInput,
                 password: passwordInput,
             };
-            // try {
-            //     axios
-            //         .post(bp.buildPath("Login"), accountInfo)
-            //         .then((res) => {
-            //             const results = res.data;
-            //             if (results.status != 200) {
-            //                 updateSuccessMessage(
-            //                     "Incorrect login information."
-            //                 );
-            //             } else {
-            //                 updateSuccessMessage("");
-            //                 sessionStorage.setItem("user_id", res.data.user_id);
-            //                 sessionStorage.setItem(
-            //                     "accessToken",
-            //                     results.webToken
-            //                 );
-            //                 setTimeout(() => {
-            //                     navigate("/home");
-            //                 });
-            //             }
-            //         })
-            //         .catch((e) => console.log(e));
-            // } catch (e) {
-            //     console.log(e);
-            // }
             try {
                 await Express.call("Login", accountInfo).then((res) => {
                     const results = res.data;

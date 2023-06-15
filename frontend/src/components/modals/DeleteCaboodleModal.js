@@ -1,11 +1,8 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import MediumButton from "../MediumButton";
 import CloseIcon from "../../images/CloseIcon.png";
 import SmallTitle from "../SmallTitle";
 import Express from "../../middleware/middlewareHelper";
-
-const bp = require("../Paths");
 
 function DeleteCaboodleModal(props) {
     const [modalInView, setInView] = useState(false);
@@ -13,35 +10,17 @@ function DeleteCaboodleModal(props) {
 
     useEffect(() => {
         setInView(props.value);
-    }, [props.value]);
-
-    useEffect(() => {
         setSelectedCaboodle(props.caboodle);
-    }, [props.caboodle]);
+    }, [props.value, props.caboodle]);
 
     try {
         const deleteCaboodle = async () => {
-            // try {
-            //     await axios
-            //         .post(bp.buildPath("DeleteCaboodle"), {
-            //             caboodleId: selectedCaboodle._id,
-            //             user_id: sessionStorage.getItem("user_id"),
-            //         })
-            //         .then((res) => {
-            //             console.log(res.data);
-            //         })
-            //         .catch((e) => console.log(e));
-            // } catch (e) {
-            //     console.log(e);
-            // }
             try {
                 await Express.call("DeleteCaboodle", {
                     caboodleId: selectedCaboodle._id,
                     user_id: sessionStorage.getItem("user_id"),
                 })
-                    .then((res) => {
-                        console.log(res.data);
-                    })
+                    .then((res) => {})
                     .catch((e) => console.log(e));
             } catch (e) {
                 console.log(e);
