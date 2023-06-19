@@ -9,7 +9,7 @@ global.services["Login"] = async ({ email, password }) => {
     try {
         if (!email || !password) return { error: "Missing paramaters" };
 
-        let findUser = await global.database["Users"]
+        const findUser = await global.database["Users"]
             .find({ $or: [{ email: email }, { profileName: email }] })
             .toArray();
         const decryptedPassword = Decrypt(findUser[0].encryptedText);

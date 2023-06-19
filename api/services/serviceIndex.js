@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleware/authenticateRequest");
 
 global.services = {};
+global.public = { services: {} };
 
 // List of collections
 require("./register");
@@ -21,11 +23,21 @@ function buildServiceRoutes(index) {
                 let results = {};
 
                 try {
+                    // Authenticate
+                    const authenticatedUser = auth.authenticateRequest(
+                        req.headers.authorization
+                    );
+
+                    if (req.body.user_id != authenticatedUser.user_id) {
+                        return res
+                            .status(401)
+                            .json({ error: "Unauthorized user" });
+                    }
+
                     results = await service(
                         req.body,
                         req.headers.authorization
                     );
-                    // console.log("Header " + req.headers.authorization);
                 } catch (e) {
                     console.log(e);
                 }

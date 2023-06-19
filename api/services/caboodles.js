@@ -1,16 +1,14 @@
 const { ObjectId } = require("mongodb");
-const auth = require("../middleware/authenticateRequest");
 
-global.services["createCaboodle"] = async (
-    { name, description, user_id, image },
-    header
-) => {
+global.services["createCaboodle"] = async ({
+    name,
+    description,
+    user_id,
+    image,
+}) => {
     try {
         if (!name || !description || !user_id)
             return { error: "Missing parameters" };
-        let authenticatedUser = auth.authenticateRequest(header);
-        if (user_id !== authenticatedUser.user_id)
-            return { error: "Unauthrized user" };
 
         const caboodle = {
             nickname: name,
@@ -28,12 +26,9 @@ global.services["createCaboodle"] = async (
     }
 };
 
-global.services["LoadCaboodles"] = async ({ user_id, skip }, header) => {
+global.services["LoadCaboodles"] = async ({ user_id, skip }) => {
     try {
         if (!user_id) return { error: "Missing parameters" };
-        let authenticatedUser = auth.authenticateRequest(header);
-        if (user_id !== authenticatedUser.user_id)
-            return { error: "Unauthrized user" };
 
         const results = await global.database["Caboodles"]
             .find({ user_id: new ObjectId(user_id) })
@@ -50,12 +45,9 @@ global.services["LoadCaboodles"] = async ({ user_id, skip }, header) => {
     }
 };
 
-global.services["DeleteCaboodle"] = async ({ caboodleId, user_id }, header) => {
+global.services["DeleteCaboodle"] = async ({ caboodleId }) => {
     try {
         if (!caboodleId) return { error: "Missing caboodle id" };
-        let authenticatedUser = auth.authenticateRequest(header);
-        if (user_id !== authenticatedUser.user_id)
-            return { error: "Unauthrized user" };
 
         const results = await global.database["Caboodles"].deleteOne({
             _id: new ObjectId(caboodleId),
@@ -73,14 +65,13 @@ global.services["DeleteCaboodle"] = async ({ caboodleId, user_id }, header) => {
     }
 };
 
-global.services["EditCaboodle"] = async (
-    { caboodleId, name, image, description, user_id },
-    header
-) => {
+global.services["EditCaboodle"] = async ({
+    caboodleId,
+    name,
+    image,
+    description,
+}) => {
     try {
-        let authenticatedUser = auth.authenticateRequest(header);
-        if (user_id !== authenticatedUser.user_id)
-            return { error: "Unauthrized user" };
         const results = await global.database["Caboodles"].updateOne(
             {
                 _id: new ObjectId(caboodleId),

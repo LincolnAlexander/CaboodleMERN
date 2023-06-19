@@ -2,6 +2,7 @@ import MediumButton from "../components/MediumButton";
 import MediumTitle from "../components/MediumTitle";
 import EditIcon from "../images/EditIcon.png";
 import TrashIcon from "../images/TrashIcon.png";
+import Header from "../components/Header";
 import CreateElementoModal from "../components/modals/CreateElementoModal";
 import EditElementoModal from "../components/modals/EditElementoModal";
 import { useEffect, useState } from "react";
@@ -16,6 +17,7 @@ function ElementosPage() {
     const [viewEditElementoModal, setEditElementoModal] = useState(false);
     const [selectedElemento, setSelectedElemento] = useState();
     const [elementosArray, setElementosArray] = useState([]);
+
     try {
         const loadElementos = async () => {
             const results = await Express.call("LoadElementos", {
@@ -170,9 +172,13 @@ function ElementosPage() {
                 </div>
             );
         }
+        function renderHeader() {
+            return <Header />;
+        }
 
         return (
             <div className="bg-mainColors-gray h-screen flex flex-col items-center">
+                {renderHeader()}
                 {renderTop()}
                 {renderTable()}
 

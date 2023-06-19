@@ -1,5 +1,4 @@
 const cryptojs = require("crypto-js");
-const jwt = require("jsonwebtoken");
 
 const Encrypt = (input) => {
     return cryptojs.AES.encrypt(input, "key").toString();
@@ -10,7 +9,7 @@ global.services["Register"] = async ({ email, password, profileName }) => {
         if (!email || !password || !profileName)
             return { error: "Missing parameters" };
 
-        let encryptedText = Encrypt(password);
+        const encryptedText = Encrypt(password);
 
         const existingUser = await global.database["Users"].findOne({
             $or: [{ email: email }, { profileName: profileName }],

@@ -13,7 +13,7 @@ let user_id;
 function CreateCaboodleModal(props) {
     let [modalInView, setInView] = useState(false);
     let [uploadedImage, setUploadedImage] = useState(false);
-    const [postImage, setPostImage] = useState({ myFile: "" });
+    let [postImage, setPostImage] = useState({ myFile: "" });
 
     useEffect(() => {
         setInView(props.value);
@@ -22,7 +22,7 @@ function CreateCaboodleModal(props) {
 
     try {
         const createCaboodle = async () => {
-            let caboodle = {
+            const caboodle = {
                 name: nickNameInput,
                 description: descriptionInput,
                 user_id: user_id,

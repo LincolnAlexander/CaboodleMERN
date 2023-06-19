@@ -9,29 +9,29 @@ import DeleteCaboodleModal from "../components/modals/DeleteCaboodleModal";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Express from "../middleware/middlewareHelper";
+import Header from "../components/Header";
 
 let totalCaboodles;
 let user_id;
 
 function HomePage() {
-    let navigate = useNavigate();
-    let [viewCreateCaboodleModal, setCreateCaboodleModal] = useState(false);
-    let [viewEditCaboodleModal, setEditCaboodleModal] = useState(false);
-    let [viewDeleteCaboodleModal, setDeleteCaboodleModal] = useState(false);
-    let [caboodlesArray, setCaboodlesArray] = useState([]);
-    let [editBoodleInfo, setEditBoodleInfo] = useState();
-    let [skipNumber, setSkipNumber] = useState(0);
-    let [viewArrows, showArrows] = useState(false);
+    const navigate = useNavigate();
+    const [viewCreateCaboodleModal, setCreateCaboodleModal] = useState(false);
+    const [viewEditCaboodleModal, setEditCaboodleModal] = useState(false);
+    const [viewDeleteCaboodleModal, setDeleteCaboodleModal] = useState(false);
+    const [caboodlesArray, setCaboodlesArray] = useState([]);
+    const [editBoodleInfo, setEditBoodleInfo] = useState();
+    const [skipNumber, setSkipNumber] = useState(0);
+    const [viewArrows, showArrows] = useState(false);
 
     try {
         const loadCaboodles = async () => {
             try {
                 const results = await Express.call("LoadCaboodles", {
                     user_id: user_id,
-                    skip: 0,
+                    skip: skipNumber,
                 });
                 setCaboodlesArray(results.data.results);
-                console.log(caboodlesArray);
                 totalCaboodles = results.data.totalCaboodles.length;
                 if (totalCaboodles > 5) showArrows(true);
             } catch (e) {
@@ -151,9 +151,13 @@ function HomePage() {
                 </>
             );
         }
+        function renderHeader() {
+            return <Header />;
+        }
 
         return (
             <div className="bg-mainColors-gray h-screen flex flex-col items-center">
+                {renderHeader()}
                 {renderTop()}
                 {renderCards()}
                 {renderArrows()}

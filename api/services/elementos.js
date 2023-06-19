@@ -1,17 +1,18 @@
 const { ObjectId } = require("mongodb");
 const auth = require("../middleware/authenticateRequest");
 
-global.services["CreateElemento"] = async (
-    { name, cost, purchased, link, priority, caboodle_id, user_id },
-    header
-) => {
+global.services["CreateElemento"] = async ({
+    name,
+    cost,
+    purchased,
+    link,
+    priority,
+    caboodle_id,
+}) => {
     try {
         if (!name || !cost || !caboodle_id)
             return { error: "Missing parameters" };
-        let authenticatedUser = auth.authenticateRequest(header);
-        console.log(user_id);
-        if (user_id !== authenticatedUser.user_id)
-            return { error: "Unauthrized user" };
+
         let elemento = {
             elementoName: name,
             elementoCost: cost,
@@ -29,13 +30,9 @@ global.services["CreateElemento"] = async (
     }
 };
 
-global.services["LoadElementos"] = async ({ caboodleId, user_id }, header) => {
+global.services["LoadElementos"] = async ({ caboodleId }) => {
     try {
         if (!caboodleId) return { error: "Missing caboodleId" };
-
-        let authenticatedUser = auth.authenticateRequest(header);
-        if (user_id !== authenticatedUser.user_id)
-            return { error: "Unauthrized user" };
 
         const results = await global.database["Elementos"]
             .find({ caboodle_id: new ObjectId(caboodleId) })
@@ -47,15 +44,9 @@ global.services["LoadElementos"] = async ({ caboodleId, user_id }, header) => {
     }
 };
 
-global.services["DeleteElemento"] = async (
-    { elemento_id, user_id },
-    header
-) => {
+global.services["DeleteElemento"] = async ({ elemento_id }) => {
     try {
         if (!elemento_id) return { error: "Missing elemento_id" };
-        let authenticatedUser = auth.authenticateRequest(header);
-        if (user_id !== authenticatedUser.user_id)
-            return { error: "Unauthrized user" };
 
         const deleted = await global.database["Elementos"].deleteOne({
             _id: new ObjectId(elemento_id),
@@ -68,16 +59,16 @@ global.services["DeleteElemento"] = async (
     }
 };
 
-global.services["EditElemento"] = async (
-    { name, cost, priority, purchased, link, elemento_id, user_id },
-    header
-) => {
+global.services["EditElemento"] = async ({
+    name,
+    cost,
+    priority,
+    purchased,
+    link,
+    elemento_id,
+}) => {
     try {
         if (!elemento_id) return { error: "Missing elemento_id" };
-
-        let authenticatedUser = auth.authenticateRequest(header);
-        if (user_id !== authenticatedUser.user_id)
-            return { error: "Unauthrized user" };
 
         const results = await global.database["Elementos"].updateOne(
             { _id: new ObjectId(elemento_id) },
