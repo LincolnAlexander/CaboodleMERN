@@ -28,12 +28,12 @@ function HomePage() {
             try {
                 const results = await Express.call("LoadCaboodles", {
                     user_id: user_id,
-                    skip: skipNumber,
+                    skip: 0,
                 });
-                caboodlesArray = results.data.results;
+                setCaboodlesArray(results.data.results);
+                console.log(caboodlesArray);
                 totalCaboodles = results.data.totalCaboodles.length;
                 if (totalCaboodles > 5) showArrows(true);
-                setCaboodlesArray(results.data.results);
             } catch (e) {
                 console.log(e);
             }

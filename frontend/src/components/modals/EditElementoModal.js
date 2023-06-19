@@ -27,9 +27,6 @@ function EditElementoModal(props) {
 
     try {
         const editElemento = async () => {
-            console.log(selectedElemento);
-            console.log(elementoNameInput.length == 0);
-            console.log(elementoNameInput);
             const elemento = {
                 name:
                     elementoNameInput.length == 0
@@ -51,7 +48,6 @@ function EditElementoModal(props) {
                 elemento_id: selectedElemento._id,
                 user_id: user_id,
             };
-            console.log(elemento);
             try {
                 Express.call("EditElemento", elemento)
                     .then((res) => {

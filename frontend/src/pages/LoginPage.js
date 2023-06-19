@@ -5,9 +5,11 @@ import SmallTitle from "../components/SmallTitle";
 import InputBox from "../components/InputBox";
 import LargeButton from "../components/LargeButton";
 import Express from "../middleware/middlewareHelper";
+import Cookies from "universal-cookie";
 
 let emailInput = "";
 let passwordInput = "";
+const cookies = new Cookies();
 
 function LoginPage() {
     let [showEmailError, updateEmailError] = useState(false);
@@ -22,19 +24,27 @@ function LoginPage() {
                 password: passwordInput,
             };
             try {
-                await Express.call("Login", accountInfo).then((res) => {
+                await Express.call("Login", accountInfo).then(async (res) => {
                     const results = res.data;
                     if (results.status != 200) {
                         updateSuccessMessage("Incorrect login information.");
                     } else {
                         updateSuccessMessage("");
-                        sessionStorage.setItem("user_id", res.data.user_id);
-                        sessionStorage.setItem("accessToken", results.webToken);
-                        setTimeout(() => {
-                            navigate("/home");
-                        });
+                        try {
+                            sessionStorage.setItem("user_id", res.data.user_id);
+                            sessionStorage.setItem(
+                                "accessToken",
+                                results.webToken
+                            );
+                            cookies.set("jwt", results.webToken);
+                        } catch (e) {
+                            console.log(e);
+                        }
                     }
                 });
+                // .then((webToken) => {
+                //     setToken(webToken);
+                // });
             } catch (e) {
                 console.log(e);
             }
@@ -120,6 +130,9 @@ function LoginPage() {
                                 }
                                 updateSuccessMessage("");
                                 signIn();
+                                setTimeout(() => {
+                                    navigate("/home");
+                                }, 1000);
                             } catch (e) {
                                 console.log(e);
                             }

@@ -56,6 +56,7 @@ global.services["DeleteCaboodle"] = async ({ caboodleId, user_id }, header) => {
         let authenticatedUser = auth.authenticateRequest(header);
         if (user_id !== authenticatedUser.user_id)
             return { error: "Unauthrized user" };
+
         const results = await global.database["Caboodles"].deleteOne({
             _id: new ObjectId(caboodleId),
         });

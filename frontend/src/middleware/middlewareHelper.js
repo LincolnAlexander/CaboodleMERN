@@ -1,15 +1,21 @@
 import Axios from "axios";
+import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
 const bp = require("../components/Paths");
+let token = cookies.get("jwt");
+token = token !== null ? token : sessionStorage.getItem("accessToken");
 
 const config = {
     headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        Authorization: `Bearer ${token}`,
     },
 };
+
 class Express {
     async call(functionName, parameters) {
-        // console.log("helper: + " + sessionStorage.getItem("accessToken"));
+        // console.log("helper: + " + token);
+        // console.log(cookies.get("jwt"));
         const results = await Axios.post(
             bp.buildPath(functionName),
             parameters,
