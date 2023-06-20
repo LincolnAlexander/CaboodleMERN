@@ -24,6 +24,8 @@ function InputBox(props) {
                         props.onBlur(event.target.value);
                     }
                 }}
+                max={props.max}
+                min={props.min}
             />
             <div className={props.showError == true ? "visible" : "invisible"}>
                 <ErrorInput errorMessage={props.errorMessage} />

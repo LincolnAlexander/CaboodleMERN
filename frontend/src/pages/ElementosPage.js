@@ -124,10 +124,10 @@ function ElementosPage() {
 
         function renderTableBody() {
             return (
-                <tbody>
+                <tbody className="">
                     {elementosArray.map((elemento) => (
                         <tr
-                            className="border-b group border-gray-300 hover:bg-mainColors-silver hover:bg-opacity-25 cursor-pointer text-mainColors-silver"
+                            className=" border-b group border-gray-300 hover:bg-mainColors-silver hover:bg-opacity-25 cursor-pointer text-mainColors-silver"
                             key={elemento._id}
                         >
                             <td
@@ -146,7 +146,10 @@ function ElementosPage() {
                                 </a>
                             </td>
                             <td className="px-6 py-2">
-                                ${elemento.elementoCost}
+                                {Intl.NumberFormat("en-US", {
+                                    style: "currency",
+                                    currency: "USD",
+                                }).format(elemento.elementoCost)}
                             </td>
                             <td className="px-6 py-2">
                                 {elemento.elementoPriority}
@@ -164,11 +167,13 @@ function ElementosPage() {
 
         function renderTable() {
             return (
-                <div className="flex w-3/5  max-h-4/6 border-4 bg-mainColors-lightGray rounded overflow-auto ">
-                    <table className="rounded-lg w-full overflow-scroll text-left">
-                        {renderTopTable()}
-                        {renderTableBody()}
-                    </table>
+                <div className="flex relative w-3/5 h-4/6 max-h-4/6 bg-mainColors-lightGray rounded overflow-auto shadow-lg mb-8 ">
+                    <div className="w-full ">
+                        <table className="overflow-hidden rounded-lg min-w-full overflow-scroll text-left table-fixed">
+                            {renderTopTable()}
+                            {renderTableBody()}
+                        </table>
+                    </div>
                 </div>
             );
         }
@@ -177,7 +182,7 @@ function ElementosPage() {
         }
 
         return (
-            <div className="bg-mainColors-gray min-h-screen flex flex-col items-center">
+            <div className="bg-mainColors-gray h-screen flex flex-col items-center ">
                 {renderHeader()}
                 {renderTop()}
                 {renderTable()}

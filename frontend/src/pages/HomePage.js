@@ -121,7 +121,7 @@ function HomePage() {
             return (
                 <>
                     {viewArrows && (
-                        <div className="flex space-x-2">
+                        <div className="flex space-x-2 p-4">
                             <button
                                 onClick={() => {
                                     try {

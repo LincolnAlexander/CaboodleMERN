@@ -107,6 +107,7 @@ function CreateElementoModal(props) {
                                     console.log(e);
                                 }
                             }}
+                            required="true"
                         />
                     </div>
                     <div>
@@ -127,6 +128,8 @@ function CreateElementoModal(props) {
                                     console.log(e);
                                 }
                             }}
+                            max="10"
+                            min="1"
                         />
                     </div>
                     <PurchasedButtons
@@ -167,7 +170,10 @@ function CreateElementoModal(props) {
                                 createElemento();
                                 props.functionCall();
                                 setInView(false);
-                            } else setErrorMessage("Check Name, Price fields");
+                            } else {
+                                e.preventDefault();
+                                setErrorMessage("Check Name, Price fields");
+                            }
                         } catch (e) {
                             console.log(e);
                         }
@@ -189,6 +195,7 @@ function CreateElementoModal(props) {
                         try {
                             props.functionCall();
                             setInView(false);
+                            setErrorMessage("");
                         } catch (e) {
                             console.log(e);
                         }

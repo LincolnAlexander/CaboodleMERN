@@ -25,15 +25,6 @@ function Header() {
                     </p>
                 </div>
                 <div className="justify-self-end flex">
-                    {/* <button
-                        onClick={() => navigate("/signIn")}
-                        className="hover:bg-slate-700 rounded hover:scale-105 transition ease-in delay-75 mr-4"
-                    >
-                        <p className="text-white m-2 text-base font-medium">
-                            Sign In
-                        </p>
-                    </button> */}
-
                     <SmallButton
                         paragraphBody="Sign Out"
                         functionCall={() => {
@@ -45,6 +36,7 @@ function Header() {
                                 console.log(e);
                             }
                         }}
+                        css="bg-red-800"
                     />
                 </div>
             </header>
