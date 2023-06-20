@@ -19,9 +19,7 @@ function DeleteCaboodleModal(props) {
                 Express.call("DeleteCaboodle", {
                     caboodleId: selectedCaboodle._id,
                     user_id: sessionStorage.getItem("user_id"),
-                })
-                    .then((res) => {})
-                    .catch((e) => console.log(e));
+                }).catch((e) => console.log(e));
             } catch (e) {
                 console.log(e);
             }

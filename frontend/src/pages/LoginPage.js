@@ -5,7 +5,6 @@ import SmallTitle from "../components/SmallTitle";
 import InputBox from "../components/InputBox";
 import LargeButton from "../components/LargeButton";
 import Express from "../middleware/middlewareHelper";
-import Cookies from "universal-cookie";
 
 let emailInput = "";
 let passwordInput = "";
@@ -37,9 +36,6 @@ function LoginPage() {
                 console.log(e);
             }
         });
-        // .then((webToken) => {
-        //     setToken(webToken);
-        // });
     };
 
     function renderTitle() {

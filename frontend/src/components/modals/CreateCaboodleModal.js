@@ -32,7 +32,7 @@ function CreateCaboodleModal(props) {
             };
             try {
                 Express.call("createCaboodle", caboodle)
-                    .then((res) => {
+                    .then(() => {
                         nickNameInput = "";
                         descriptionInput = "";
                     })
