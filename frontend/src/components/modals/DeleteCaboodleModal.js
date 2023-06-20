@@ -16,7 +16,7 @@ function DeleteCaboodleModal(props) {
     try {
         const deleteCaboodle = async () => {
             try {
-                await Express.call("DeleteCaboodle", {
+                Express.call("DeleteCaboodle", {
                     caboodleId: selectedCaboodle._id,
                     user_id: sessionStorage.getItem("user_id"),
                 })

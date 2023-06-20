@@ -34,7 +34,7 @@ function CreateElementoModal(props) {
                 user_id: user_id,
             };
 
-            await Express.call("CreateElemento", elemento)
+            Express.call("CreateElemento", elemento)
                 .then(() => {
                     priceInput = null;
                     urlInput = "";

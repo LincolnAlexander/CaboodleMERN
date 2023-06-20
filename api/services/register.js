@@ -4,7 +4,11 @@ const Encrypt = (input) => {
     return cryptojs.AES.encrypt(input, "key").toString();
 };
 
-global.services["Register"] = async ({ email, password, profileName }) => {
+global.public.services["Register"] = async ({
+    email,
+    password,
+    profileName,
+}) => {
     try {
         if (!email || !password || !profileName)
             return { error: "Missing parameters" };

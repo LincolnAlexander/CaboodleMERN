@@ -22,7 +22,7 @@ function LoginPage() {
             password: passwordInput,
         };
 
-        Express.call("Login", accountInfo).then((res) => {
+        Express.callPublic("Login", accountInfo).then((res) => {
             try {
                 const results = res.data;
                 if (results.status != 200) {

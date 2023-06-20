@@ -29,7 +29,7 @@ function ElementosPage() {
 
         const deleteElemento = async (elemento_id) => {
             try {
-                await Express.call("DeleteElemento", {
+                Express.call("DeleteElemento", {
                     elemento_id,
                     user_id: user_id,
                 }).then(() => {
@@ -164,7 +164,7 @@ function ElementosPage() {
 
         function renderTable() {
             return (
-                <div className="w-3/5 h-4/6 bg-mainColors-lightGray rounded overflow-auto ">
+                <div className="flex w-3/5  max-h-4/6 border-4 bg-mainColors-lightGray rounded overflow-auto ">
                     <table className="rounded-lg w-full overflow-scroll text-left">
                         {renderTopTable()}
                         {renderTableBody()}
@@ -177,7 +177,7 @@ function ElementosPage() {
         }
 
         return (
-            <div className="bg-mainColors-gray h-screen flex flex-col items-center">
+            <div className="bg-mainColors-gray min-h-screen flex flex-col items-center">
                 {renderHeader()}
                 {renderTop()}
                 {renderTable()}

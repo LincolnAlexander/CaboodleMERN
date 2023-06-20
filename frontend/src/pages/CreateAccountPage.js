@@ -11,21 +11,21 @@ let passwordInput = "";
 let profileInput = "";
 
 function CreateAccountPage() {
-    let [showEmailError, updateEmailError] = useState(false);
-    let [showPasswordError, updatePasswordError] = useState(false);
-    let [showProfileError, updateProfileError] = useState(false);
-    let [successMessage, updateSuccessMessage] = useState();
+    const [showEmailError, updateEmailError] = useState(false);
+    const [showPasswordError, updatePasswordError] = useState(false);
+    const [showProfileError, updateProfileError] = useState(false);
+    const [successMessage, updateSuccessMessage] = useState();
     const navigate = useNavigate();
 
     try {
         const createAccount = async () => {
-            let loginInfo = {
+            const loginInfo = {
                 email: emailInput,
                 password: passwordInput,
                 profileName: profileInput,
             };
             try {
-                Express.call("Register", loginInfo)
+                Express.callPublic("Register", loginInfo)
                     .then((res) => {
                         const results = res.data;
                         if (results.status === 200) {

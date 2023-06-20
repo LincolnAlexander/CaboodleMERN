@@ -29,13 +29,13 @@ function LandingPage() {
 
     function renderLeftTitle() {
         return (
-            <div className="">
-                <p className="text-5xl text-mainColors-silver bg-clip-text font-bold text-center ">
+            <div className="space-y-16">
+                <p className="text-5xl text-mainColors-silver  font-bold text-center ">
                     Create and Organize{" "}
-                    <p className=" text-transparent bg-clip-text  bg-gradient-to-r from-green-300 to-green-600">
+                    <span className="block text-transparent bg-clip-text leading-normal bg-gradient-to-r from-green-300 to-green-600">
                         Your Dream Collections
-                    </p>
-                    <p>with Ease</p>
+                    </span>
+                    <span className="block">with Ease</span>
                 </p>
             </div>
         );

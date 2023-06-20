@@ -11,9 +11,9 @@ let descriptionInput = "";
 let user_id;
 
 function CreateCaboodleModal(props) {
-    let [modalInView, setInView] = useState(false);
-    let [uploadedImage, setUploadedImage] = useState(false);
-    let [postImage, setPostImage] = useState({ myFile: "" });
+    const [modalInView, setInView] = useState(false);
+    const [uploadedImage, setUploadedImage] = useState(false);
+    const [postImage, setPostImage] = useState({ myFile: "" });
 
     useEffect(() => {
         setInView(props.value);
@@ -31,7 +31,7 @@ function CreateCaboodleModal(props) {
                 user_id: user_id,
             };
             try {
-                await Express.call("createCaboodle", caboodle)
+                Express.call("createCaboodle", caboodle)
                     .then((res) => {
                         nickNameInput = "";
                         descriptionInput = "";

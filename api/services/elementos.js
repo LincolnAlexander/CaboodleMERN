@@ -1,5 +1,4 @@
 const { ObjectId } = require("mongodb");
-const auth = require("../middleware/authenticateRequest");
 
 global.services["CreateElemento"] = async ({
     name,
@@ -13,7 +12,7 @@ global.services["CreateElemento"] = async ({
         if (!name || !cost || !caboodle_id)
             return { error: "Missing parameters" };
 
-        let elemento = {
+        const elemento = {
             elementoName: name,
             elementoCost: cost,
             elementoPurchased: purchased,

@@ -5,7 +5,7 @@ const Decrypt = (input) => {
     return cryptojs.AES.decrypt(input, "key").toString(cryptojs.enc.Utf8);
 };
 
-global.services["Login"] = async ({ email, password }) => {
+global.public.services["Login"] = async ({ email, password }) => {
     try {
         if (!email || !password) return { error: "Missing paramaters" };
 

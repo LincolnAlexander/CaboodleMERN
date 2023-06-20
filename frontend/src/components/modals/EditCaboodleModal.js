@@ -24,7 +24,7 @@ function EditCaboodleModal(props) {
 
     try {
         const editCaboodle = async () => {
-            let caboodle = {
+            const caboodle = {
                 name:
                     nickNameInput.length == 0
                         ? selectedCaboodle.nickname
@@ -42,7 +42,7 @@ function EditCaboodleModal(props) {
                 user_id: user_id,
             };
             try {
-                await Express.call("EditCaboodle", caboodle)
+                Express.call("EditCaboodle", caboodle)
                     .then((res) => {
                         nickNameInput = "";
                         descriptionInput = "";

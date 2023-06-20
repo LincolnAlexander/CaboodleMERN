@@ -1,7 +1,5 @@
 import Axios from "axios";
-import Cookies from "universal-cookie";
 
-const cookies = new Cookies();
 const bp = require("../components/Paths");
 
 class Express {
@@ -18,6 +16,15 @@ class Express {
             parameters,
             config
         );
+        return results;
+    }
+
+    async callPublic(functionName, paramaters) {
+        const results = await Axios.post(
+            "http://localhost:5000/public/" + functionName,
+            paramaters
+        );
+
         return results;
     }
 }

@@ -156,7 +156,7 @@ function HomePage() {
         }
 
         return (
-            <div className="bg-mainColors-gray h-screen flex flex-col items-center">
+            <div className="bg-mainColors-gray min-h-screen flex flex-col items-center">
                 {renderHeader()}
                 {renderTop()}
                 {renderCards()}
